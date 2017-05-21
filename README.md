@@ -1,5 +1,7 @@
 # Generic Middleware Functional Test Module for Codeception
 
+[![Build Status](https://travis-ci.org/LapazPhp/CodeceptionGenericMiddleware.svg?branch=master)](https://travis-ci.org/LapazPhp/CodeceptionGenericMiddleware)
+
 Add MiddlewareContainer functional test module to your `finctional.suite.yml`:
 
 ```yaml
