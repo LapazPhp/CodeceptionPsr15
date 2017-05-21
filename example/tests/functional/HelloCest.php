@@ -1,0 +1,22 @@
+<?php
+
+class HelloCest
+{
+    public function _before(FunctionalTester $I)
+    {
+    }
+
+    public function _after(FunctionalTester $I)
+    {
+    }
+
+    // tests
+    public function tryToTest(FunctionalTester $I)
+    {
+        $I->amOnPage('/');
+        $I->see('Hello');
+
+        $container = $I->getMiddlewareContainer();
+        $I->assertInstanceOf(\Psr\Container\ContainerInterface::class, $container);
+    }
+}

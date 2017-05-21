@@ -1,0 +1,17 @@
+{
+    "require": {
+        "aura/di": "^3.2",
+        "zendframework/zend-diactoros": "^1.4",
+        "zendframework/zend-stratigility": "^2.0",
+        "http-interop/http-factory-diactoros": "^0.3.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lapaz\\Codeception\\GenericMiddleware\\": "../src",
+            "Acme\\App\\": "src"
+        }
+    }
+}
