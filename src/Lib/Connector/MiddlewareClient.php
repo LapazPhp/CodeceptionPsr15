@@ -1,6 +1,7 @@
 <?php
 namespace Lapaz\Codeception\GenericMiddleware\Lib\Connector;
 
+use Codeception\Configuration;
 use Interop\Http\Factory\ResponseFactoryInterface;
 use Interop\Http\Factory\ServerRequestFactoryInterface;
 use Interop\Http\Factory\StreamFactoryInterface;
@@ -86,8 +87,8 @@ class MiddlewareClient extends Client
 
         $uri = $request->getUri();
 
-        $queryParams = array();
-        $postParams = array();
+        $queryParams = [];
+        $postParams = [];
         $queryString = parse_url($request->getUri(), PHP_URL_QUERY);
         if ($queryString != '') {
             parse_str($queryString, $queryParams);
@@ -124,7 +125,7 @@ class MiddlewareClient extends Client
         $psr7ResponsePrototype = $this->createResponse();
 
         $cwd = getcwd();
-        chdir(codecept_root_dir());
+        chdir(Configuration::projectDir());
 
         if ($this->processor instanceof MiddlewareInterface) {
             $finalDelegate = new NoopFinalDelegate($psr7ResponsePrototype);
@@ -149,10 +150,10 @@ class MiddlewareClient extends Client
 
     private function extractHeaders(Request $request)
     {
-        $headers = array();
+        $headers = [];
         $server = $request->getServer();
 
-        $contentHeaders = array('Content-Length' => true, 'Content-Md5' => true, 'Content-Type' => true);
+        $contentHeaders = ['Content-Length' => true, 'Content-Md5' => true, 'Content-Type' => true];
         foreach ($server as $header => $val) {
             $header = implode('-', array_map('ucfirst', explode('-', strtolower(str_replace('_', '-', $header)))));
 
@@ -168,7 +169,7 @@ class MiddlewareClient extends Client
 
     private function convertFiles(array $files)
     {
-        $fileObjects = array();
+        $fileObjects = [];
         foreach ($files as $fieldName => $file) {
             if ($file instanceof UploadedFileInterface) {
                 $fileObjects[$fieldName] = $file;

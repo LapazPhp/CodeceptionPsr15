@@ -5,6 +5,12 @@ use Codeception\Configuration;
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;
+use Interop\Http\Factory\ResponseFactoryInterface;
+use Interop\Http\Factory\ServerRequestFactoryInterface;
+use Interop\Http\Factory\StreamFactoryInterface;
+use Interop\Http\Factory\UploadedFileFactoryInterface;
+use Interop\Http\Factory\UriFactoryInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Lapaz\Codeception\GenericMiddleware\Lib\Connector\MiddlewareClient;
 use Psr\Container\ContainerInterface;
 
@@ -49,7 +55,7 @@ class MiddlewareContainer extends Framework
     /**
      * @inheritDoc
      */
-    protected $config = array(
+    protected $config = [
         'containerFile' => '',
         'processorName' => '',
         'requestFactoryName' => '',
@@ -57,12 +63,12 @@ class MiddlewareContainer extends Framework
         'uriFactoryName' => '',
         'streamFactoryName' => '',
         'uploadedFileFactoryName' => '',
-    );
+    ];
 
     /**
      * @inheritDoc
      */
-    protected $requiredFields = array(
+    protected $requiredFields = [
         'containerFile',
         'processorName',
         'requestFactoryName',
@@ -70,7 +76,7 @@ class MiddlewareContainer extends Framework
         'uriFactoryName',
         'streamFactoryName',
         'uploadedFileFactoryName',
-    );
+    ];
 
     /**
      * @inheritDoc
@@ -87,12 +93,19 @@ class MiddlewareContainer extends Framework
      */
     public $container;
 
+    // Dirty hack to avoid static method: Configuration::projectDir()
+    public $_pathResolver = null;
+
     /**
      * @inheritDoc
      */
     public function _initialize()
     {
-        $this->containerFile = Configuration::projectDir() . '/' . $this->config['containerFile'];
+        if ($this->_pathResolver) {
+            $this->containerFile = call_user_func($this->_pathResolver, $this->config['containerFile']);
+        } else {
+            $this->containerFile = Configuration::projectDir() . '/' . $this->config['containerFile'];
+        }
 
         if (!is_file($this->containerFile)) {
             throw new ModuleConfigException(
@@ -111,13 +124,13 @@ class MiddlewareContainer extends Framework
             );
         }
 
-        $this->checkService('processorName', '\Interop\Http\ServerMiddleware\MiddlewareInterface', true);
+        $this->checkService('processorName', MiddlewareInterface::class, true);
 
-        $this->checkService('requestFactoryName', '\Interop\Http\Factory\ServerRequestFactoryInterface', true);
-        $this->checkService('responseFactoryName', '\Interop\Http\Factory\ResponseFactoryInterface', true);
-        $this->checkService('uriFactoryName', '\Interop\Http\Factory\UriFactoryInterface', true);
-        $this->checkService('streamFactoryName', '\Interop\Http\Factory\StreamFactoryInterface', true);
-        $this->checkService('uploadedFileFactoryName', '\Interop\Http\Factory\UploadedFileFactoryInterface', true);
+        $this->checkService('requestFactoryName', ServerRequestFactoryInterface::class, true);
+        $this->checkService('responseFactoryName', ResponseFactoryInterface::class, true);
+        $this->checkService('uriFactoryName', UriFactoryInterface::class, true);
+        $this->checkService('streamFactoryName', StreamFactoryInterface::class, true);
+        $this->checkService('uploadedFileFactoryName', UploadedFileFactoryInterface::class, true);
     }
 
     /**
