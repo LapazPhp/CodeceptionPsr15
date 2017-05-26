@@ -13,9 +13,10 @@ use Lapaz\Codeception\GenericMiddleware\Lib\Connector\MiddlewareClient;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamWrapper;
+use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-class MiddlewareContainerTest extends \PHPUnit_Framework_TestCase
+class MiddlewareContainerTest extends TestCase
 {
     /**
      * @var ContainerInterface

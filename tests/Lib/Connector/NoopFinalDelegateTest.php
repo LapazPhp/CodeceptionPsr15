@@ -1,10 +1,11 @@
 <?php
 namespace Lapaz\Codeception\GenericMiddleware\Lib\Connector;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class NoopFinalDelegateTest extends \PHPUnit_Framework_TestCase
+class NoopFinalDelegateTest extends TestCase
 {
     public function testProcess()
     {

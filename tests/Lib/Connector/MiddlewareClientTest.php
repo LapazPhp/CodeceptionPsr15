@@ -7,11 +7,12 @@ use Http\Factory\Diactoros\StreamFactory;
 use Http\Factory\Diactoros\UploadedFileFactory;
 use Http\Factory\Diactoros\UriFactory;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\BrowserKit\Request;
 
-class MiddlewareClientTest extends \PHPUnit_Framework_TestCase
+class MiddlewareClientTest extends TestCase
 {
     public function testMiddlewareInterface()
     {
