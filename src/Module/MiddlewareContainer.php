@@ -93,19 +93,12 @@ class MiddlewareContainer extends Framework
      */
     public $container;
 
-    // Dirty hack to avoid static method: Configuration::projectDir()
-    public $_pathResolver = null;
-
     /**
      * @inheritDoc
      */
     public function _initialize()
     {
-        if ($this->_pathResolver) {
-            $this->containerFile = call_user_func($this->_pathResolver, $this->config['containerFile']);
-        } else {
-            $this->containerFile = Configuration::projectDir() . '/' . $this->config['containerFile'];
-        }
+        $this->containerFile = Configuration::projectDir() . '/' . $this->config['containerFile'];
 
         if (!is_file($this->containerFile)) {
             throw new ModuleConfigException(
