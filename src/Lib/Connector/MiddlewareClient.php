@@ -2,17 +2,17 @@
 namespace Lapaz\Codeception\GenericMiddleware\Lib\Connector;
 
 use Codeception\Configuration;
-use Interop\Http\Factory\ResponseFactoryInterface;
-use Interop\Http\Factory\ServerRequestFactoryInterface;
-use Interop\Http\Factory\StreamFactoryInterface;
-use Interop\Http\Factory\UploadedFileFactoryInterface;
-use Interop\Http\Factory\UriFactoryInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\BrowserKit\Response;
@@ -85,6 +85,7 @@ class MiddlewareClient extends Client
             $serverParams['SCRIPT_NAME'] = 'Codeception';
         }
 
+        $method = $request->getMethod();
         $uri = $request->getUri();
 
         $queryParams = [];
@@ -93,7 +94,7 @@ class MiddlewareClient extends Client
         if ($queryString != '') {
             parse_str($queryString, $queryParams);
         }
-        if ($request->getMethod() !== 'GET') {
+        if ($method !== 'GET') {
             $postParams = $request->getParameters();
         }
 
@@ -104,9 +105,7 @@ class MiddlewareClient extends Client
             rewind($inputStream);
         }
 
-        $psr7Request = $this->createRequest($serverParams)
-            ->withMethod($request->getMethod())
-            ->withUri($this->createUri($uri))
+        $psr7Request = $this->createRequest($method, $this->createUri($uri), $serverParams)
             ->withBody($this->createStream($inputStream))
             ->withQueryParams($queryParams)
             ->withParsedBody($postParams)
@@ -128,12 +127,12 @@ class MiddlewareClient extends Client
         chdir(Configuration::projectDir());
 
         if ($this->processor instanceof MiddlewareInterface) {
-            $finalDelegate = new NoopFinalDelegate($psr7ResponsePrototype);
+            $finalDelegate = new NoopFinalHandler($psr7ResponsePrototype);
             $psr7Response = $this->processor->process($psr7Request, $finalDelegate);
         } else {
             $psr7Response = call_user_func($this->processor, $psr7Request, $psr7ResponsePrototype, function ($request, $response) {
-                $finalDelegate = new NoopFinalDelegate($response);
-                return $finalDelegate->process($request);
+                $finalDelegate = new NoopFinalHandler($response);
+                return $finalDelegate->handle($request);
             });
         }
 
@@ -183,14 +182,19 @@ class MiddlewareClient extends Client
     }
 
     /**
+     * @param string $method
+     * @param UriInterface|string $uri
      * @param array $serverParams
      * @return ServerRequestInterface
      */
-    private function createRequest($serverParams)
+    private function createRequest(string $method, $uri, array $serverParams)
     {
         $factory = $this->requestFactory;
-        return $factory instanceof ServerRequestFactoryInterface ?
-            $factory->createServerRequestFromArray($serverParams) : $factory($serverParams);
+        if ($factory instanceof ServerRequestFactoryInterface) {
+            return $factory->createServerRequest($method, $uri, $serverParams);
+        } else {
+            return $factory($method, $uri, $serverParams);
+        }
     }
 
     /**

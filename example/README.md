@@ -16,8 +16,8 @@ Building Actor classes for suites: functional
 
 $ vendor/bin/codecept run functional --steps
 
-Codeception PHP Testing Framework v2.2.11
-Powered by PHPUnit 5.7.19 by Sebastian Bergmann and contributors.
+Codeception PHP Testing Framework v2.4.5
+Powered by PHPUnit 7.3.2 by Sebastian Bergmann and contributors.
 
 Functional Tests (1) ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HelloCest: Try to test
@@ -33,7 +33,7 @@ Scenario --
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-Time: 128 ms, Memory: 10.00MB
+Time: 142 ms, Memory: 12.00MB
 
 OK (1 test, 2 assertions)
 ```

@@ -5,14 +5,14 @@ use Codeception\Configuration;
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;
-use Interop\Http\Factory\ResponseFactoryInterface;
-use Interop\Http\Factory\ServerRequestFactoryInterface;
-use Interop\Http\Factory\StreamFactoryInterface;
-use Interop\Http\Factory\UploadedFileFactoryInterface;
-use Interop\Http\Factory\UriFactoryInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Lapaz\Codeception\GenericMiddleware\Lib\Connector\MiddlewareClient;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * Generic PSR-7 middleware functional test support.

@@ -15,7 +15,7 @@ class NoopFinalDelegateTest extends TestCase
         assert($response instanceof ResponseInterface);
         assert($request instanceof ServerRequestInterface);
 
-        $delegate = new NoopFinalDelegate($response);
-        $this->assertSame($response, $delegate->process($request));
+        $delegate = new NoopFinalHandler($response);
+        $this->assertSame($response, $delegate->handle($request));
     }
 }

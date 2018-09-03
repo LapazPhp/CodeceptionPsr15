@@ -6,10 +6,10 @@ use Http\Factory\Diactoros\ServerRequestFactory;
 use Http\Factory\Diactoros\StreamFactory;
 use Http\Factory\Diactoros\UploadedFileFactory;
 use Http\Factory\Diactoros\UriFactory;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Symfony\Component\BrowserKit\Request;
 
 class MiddlewareClientTest extends TestCase
@@ -89,8 +89,8 @@ class MiddlewareClientTest extends TestCase
         $connector = new MiddlewareClient();
 
         $connector->setFactories(
-            function ($server = []) {
-                return (new ServerRequestFactory())->createServerRequestFromArray($server);
+            function ($method, $uri, $server = []) {
+                return (new ServerRequestFactory())->createServerRequest($method, $uri, $server);
             },
             function ($code = 200) {
                 return (new ResponseFactory())->createResponse($code);

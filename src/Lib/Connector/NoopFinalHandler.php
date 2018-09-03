@@ -1,11 +1,11 @@
 <?php
 namespace Lapaz\Codeception\GenericMiddleware\Lib\Connector;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class NoopFinalDelegate implements DelegateInterface
+class NoopFinalHandler implements RequestHandlerInterface
 {
     /**
      * @var ResponseInterface;
@@ -25,7 +25,7 @@ class NoopFinalDelegate implements DelegateInterface
     /**
      * @inheritDoc
      */
-    public function process(ServerRequestInterface $request)
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->response;
     }

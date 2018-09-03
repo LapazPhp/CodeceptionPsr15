@@ -6,7 +6,7 @@ $di = $containerBuilder->newInstance();
 
 $di->set('middlewarePipe', $di->lazy(function () use ($di) {
     $pipe = $di->newInstance(MiddlewarePipe::class);
-    $pipe->pipe('/', $di->get('middleware.hello'));
+    $pipe->pipe($di->get('middleware.hello'));
     return $pipe;
 }));
 
