@@ -27,7 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Lapaz\\Codeception\\GenericMiddleware\\": "src"
+            "Lapaz\\Codeception\\Psr15\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lapaz\\Codeception\\Psr15\\": "tests"
         }
     }
 }

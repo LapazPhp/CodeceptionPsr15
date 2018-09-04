@@ -10,7 +10,7 @@ Add MiddlewareContainer functional test module to your `finctional.suite.yml`:
 class_name: FunctionalTester
 modules:
     enabled:
-        - \Lapaz\Codeception\GenericMiddleware\Module\MiddlewareContainer:
+        - \Lapaz\Codeception\Psr15\Module\MiddlewareContainer:
             containerFile: tests/_app/container.php
             processorName: middlewarePipe
             requestFactoryName: http.requestFactory

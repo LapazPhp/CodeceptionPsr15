@@ -1,5 +1,5 @@
 <?php
-namespace Lapaz\Codeception\GenericMiddleware\Lib\Connector;
+namespace Lapaz\Codeception\Psr15\Lib\Connector;
 
 use Http\Factory\Diactoros\ResponseFactory;
 use Http\Factory\Diactoros\ServerRequestFactory;

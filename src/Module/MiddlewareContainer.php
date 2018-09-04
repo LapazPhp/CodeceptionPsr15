@@ -1,11 +1,11 @@
 <?php
-namespace Lapaz\Codeception\GenericMiddleware\Module;
+namespace Lapaz\Codeception\Psr15\Module;
 
 use Codeception\Configuration;
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;
-use Lapaz\Codeception\GenericMiddleware\Lib\Connector\MiddlewareClient;
+use Lapaz\Codeception\Psr15\Lib\Connector\MiddlewareClient;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -29,7 +29,7 @@ use Psr\Http\Server\MiddlewareInterface;
  * class_name: FunctionalTester
  *   modules:
  *     enabled:
- *       - \Lapaz\Codeception\GenericMiddleware\Module\MiddlewareContainer:
+ *       - \Lapaz\Codeception\Psr15\Module\MiddlewareContainer:
  *         containerFile: tests/_app/container.php
  *         processorName: http.middlewarePipe
  *         requestFactoryName: http.requestFactory
