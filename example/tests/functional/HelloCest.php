@@ -15,8 +15,5 @@ class HelloCest
     {
         $I->amOnPage('/');
         $I->see('Hello');
-
-        $container = $I->getMiddlewareContainer();
-        $I->assertInstanceOf(\Psr\Container\ContainerInterface::class, $container);
     }
 }

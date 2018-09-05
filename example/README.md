@@ -26,14 +26,12 @@ Test: tests/functional/HelloCest.php:tryToTest
 Scenario --
  I am on page "/"
  I see "Hello"
- I get middleware container 
- I assert instance of "Psr\Container\ContainerInterface","Aura\\Di\\Container"
  PASSED 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-Time: 142 ms, Memory: 12.00MB
+Time: 121 ms, Memory: 12.00MB
 
 OK (1 test, 2 assertions)
 ```

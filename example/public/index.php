@@ -1,14 +1,21 @@
 <?php
-use Zend\Diactoros\Response\SapiEmitter;
-use Zend\Diactoros\Server;
+
+use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
+use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+use Zend\HttpHandlerRunner\RequestHandlerRunner;
+use Zend\Stratigility\Middleware\ErrorResponseGenerator;
 
 require __DIR__ . '/../vendor/autoload.php';
 $container = require __DIR__ . '/../config/container.php';
 
-$server = Server::createServerFromRequest(
-    [$container->get('middlewarePipe'), 'handle'],
-    ServerRequestFactory::fromGlobals()
+$runner = new RequestHandlerRunner(
+    $container->get('rootRequestHandler'),
+    new SapiEmitter(),
+    [ServerRequestFactory::class, 'fromGlobals'],
+    function ($e) {
+        $generator = new ErrorResponseGenerator();
+        return $generator($e, ServerRequestFactory::fromGlobals(), new Response());
+    }
 );
-$server->setEmitter(new SapiEmitter());
-$server->listen();
+$runner->run();
