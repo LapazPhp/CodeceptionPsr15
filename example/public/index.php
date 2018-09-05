@@ -6,7 +6,7 @@ use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 use Zend\Stratigility\Middleware\ErrorResponseGenerator;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 $container = require __DIR__ . '/../config/container.php';
 
 $runner = new RequestHandlerRunner(
