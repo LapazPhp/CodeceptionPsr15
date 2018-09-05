@@ -5,11 +5,6 @@ use Codeception\Configuration;
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;
-use Http\Factory\Diactoros\ResponseFactory;
-use Http\Factory\Diactoros\ServerRequestFactory;
-use Http\Factory\Diactoros\StreamFactory;
-use Http\Factory\Diactoros\UploadedFileFactory;
-use Http\Factory\Diactoros\UriFactory;
 use Lapaz\Codeception\Psr15\Lib\Connector\Psr15Client;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -27,7 +22,15 @@ use Psr\Http\Server\RequestHandlerInterface;
  * ```
  *
  * requestHandler:
- * The script which returns an instance which implements PSR-15 RequestHandlerInterface.
+ *   The script which returns an instance of PSR-15 RequestHandlerInterface implementation.
+ *
+ * serverRequestFactoryClass:
+ * responseFactoryClass:
+ * uriFactoryClass:
+ * streamFactoryClass:
+ * uploadedFileFactoryClass:
+ *   Class name of HTTP message object factory which implements PSR-17 interface.
+ *   Default is Zend Diactoros factory. You can change Slim version using http-interop/http-factory-slim.
  */
 class Psr15 extends Framework
 {
@@ -36,6 +39,11 @@ class Psr15 extends Framework
      */
     protected $config = [
         'requestHandler' => '',
+        'serverRequestFactoryClass' => 'Http\Factory\Diactoros\ServerRequestFactory',
+        'responseFactoryClass' => 'Http\Factory\Diactoros\ResponseFactory',
+        'uriFactoryClass' => 'Http\Factory\Diactoros\UriFactory',
+        'streamFactoryClass' => 'Http\Factory\Diactoros\StreamFactory',
+        'uploadedFileFactoryClass' => 'Http\Factory\Diactoros\UploadedFileFactory',
     ];
 
     /**
@@ -92,11 +100,11 @@ class Psr15 extends Framework
 
         $this->client = new Psr15Client();
         $this->client->setFactories(
-            new ServerRequestFactory(),
-            new ResponseFactory(),
-            new UriFactory(),
-            new StreamFactory(),
-            new UploadedFileFactory()
+            new $this->config['serverRequestFactoryClass'],
+            new $this->config['responseFactoryClass'],
+            new $this->config['uriFactoryClass'],
+            new $this->config['streamFactoryClass'],
+            new $this->config['uploadedFileFactoryClass']
         );
 
         $this->client->setRequestHandler($requestHandler);
