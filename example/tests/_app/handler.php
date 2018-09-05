@@ -1,8 +1,5 @@
 <?php
-
-use Aura\Di\Container;
-
-/** @var Container $di */
+/** @var \Psr\Container\ContainerInterface $di */
 $di = require __DIR__ . '/../../config/container.php';
 
 return $di->get('rootRequestHandler');

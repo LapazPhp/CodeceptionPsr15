@@ -1,6 +1,6 @@
 {
-    "name": "lapaz/codeception-generic-middleware",
-    "description": "Generic Middleware Functional Test Module for Codeception",
+    "name": "lapaz/codeception-psr15",
+    "description": "Generic PSR-15 Functional Test Module for Codeception",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -22,10 +22,10 @@
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.3"
+        "phpunit/phpunit": "^7.3.3"
     },
     "suggest": {
-        "http-interop/http-factory-slim": "Slim version of PSR-17 implementations"
+        "http-interop/http-factory-slim": "Slim version of PSR-17 implementations instead of Diactoros"
     },
     "autoload": {
         "psr-4": {
