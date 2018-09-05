@@ -1,4 +1,4 @@
-# Generic Middleware Functional Test Module for Codeception
+# Generic PSR-15 Functional Test Module for Codeception
 
 [![Build Status](https://travis-ci.org/LapazPhp/CodeceptionPsr15.svg?branch=master)](https://travis-ci.org/LapazPhp/CodeceptionPsr15)
 
